@@ -1,2 +1,2 @@
 # netutil
-Network and interface utilities
+Golang network and interface utilities
