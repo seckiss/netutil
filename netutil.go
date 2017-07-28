@@ -84,3 +84,19 @@ func ThisHostPublicIPs() (ips []string) {
 	}
 	return ips
 }
+
+func ThisHostIPs() (ips []string) {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		return nil
+	}
+	for _, a := range addrs {
+		switch addr := a.(type) {
+		case *net.IPNet:
+			if addr.IP.IsGlobalUnicast() {
+				ips = append(ips, addr.IP.String())
+			}
+		}
+	}
+	return ips
+}
