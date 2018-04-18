@@ -77,7 +77,7 @@ func ThisHostPublicIPs() (ips []string) {
 	for _, a := range addrs {
 		switch addr := a.(type) {
 		case *net.IPNet:
-			if addr.IP.IsGlobalUnicast() && !isPrivateSubnet(addr.IP) {
+			if addr.IP.To4() != nil && addr.IP.IsGlobalUnicast() && !isPrivateSubnet(addr.IP) {
 				ips = append(ips, addr.IP.String())
 			}
 		}
@@ -93,7 +93,7 @@ func ThisHostIPs() (ips []string) {
 	for _, a := range addrs {
 		switch addr := a.(type) {
 		case *net.IPNet:
-			if addr.IP.IsGlobalUnicast() {
+			if addr.IP.To4() != nil && addr.IP.IsGlobalUnicast() {
 				ips = append(ips, addr.IP.String())
 			}
 		}
